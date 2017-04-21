@@ -23,7 +23,7 @@ aptly_rootdir:
 aptly_conf:
   file.managed:
     - name: {{ salt['pillar.get']('aptly:homedir', '/var/lib/aptly') }}/.aptly.conf
-    - source: salt://aptly/files/.aptly.conf.jinja
+    - source: salt://aptly/files/.aptly.conf
     - template: jinja
     - user: aptly
     - group: aptly

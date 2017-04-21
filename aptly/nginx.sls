@@ -1,11 +1,11 @@
-include:
-  - nginx
-  - nginx.config
+nginx:
+  pkg.installed:
+    - name: nginx
 
 aptly_site:
   file.managed:
-    - name: /etc/nginx/sites-enabled/aptly
-    - source: salt://aptly/files/aptly.jinja
+    - name: /etc/nginx/conf.d/aptly.conf
+    - source: salt://aptly/files/aptly.conf
     - template: jinja
     - mode: 644
     - user: root

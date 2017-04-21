@@ -1,5 +1,3 @@
-# Set up our Aptly repos
-
 include:
   - aptly
   - aptly.aptly_config
@@ -8,7 +6,7 @@ include:
   {% set homedir = salt['pillar.get']('aptly:homedir', '/var/lib/aptly') %}
   {% for distribution in opts['distributions'] %}
     {% for component in opts['components'] %}
-      {% set repo_name = repo + '_' + distribution + '_' + component %}
+      {% set repo_name = repo %}
 create_{{ repo_name }}_repo:
   cmd.run:
     - name: aptly repo create -distribution="{{ distribution }}" -comment="{{ opts['comment'] }}" -component="{{ component }}" {{ repo_name }}
@@ -20,7 +18,7 @@ create_{{ repo_name }}_repo:
       - sls: aptly.aptly_config
 
       {% if opts.get('pkgdir', false) %}
-{{ opts['pkgdir'] }}/{{ distribution }}/{{ component }}:
+{{ opts['pkgdir'] }}/{{ distribution }}:
   file.directory:
     - user: root
     - group: root
@@ -32,12 +30,12 @@ create_{{ repo_name }}_repo:
           {# we dont  have all the packages loaded, add all packages in opts['pkgdir'] #}
 add_{{ repo_name }}_pkgs:
   cmd.run:
-    - name: aptly repo add -force-replace=true -remove-files=true {{ repo_name }} {{ opts['pkgdir'] }}/{{ distribution }}/{{ component }}
+    - name: aptly repo add -force-replace=true -remove-files=true {{ repo_name }} {{ opts['pkgdir'] }}/{{ distribution }}
     - user: aptly
     - env:
       - HOME: {{ homedir }}
     - onlyif:
-      - find {{ opts['pkgdir'] }}/{{ distribution }}/{{ component }} -type f -mindepth 1 -print -quit | grep -q .
+      - find {{ opts['pkgdir'] }}/{{ distribution }} -type f -mindepth 1 -print -quit | grep -q .
     - require:
       - cmd: create_{{ repo_name }}_repo
         {% endif %}
