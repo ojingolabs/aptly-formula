@@ -45,7 +45,3 @@ Create the sites-enabled file for Nginx.
 ----------
 
 Publish the repositories.
-
-Dependencies:
-
-* `Nginx <https://github.com/saltstack-formulas/nginx-formula>`_
