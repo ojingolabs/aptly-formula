@@ -7,16 +7,20 @@ aptly:
     - all
     - source
   repos:
-    repo01:
+    dev:
       components:
         - main
-        - contrib
-        - non-free
       distributions:
-        - wheezy
-        - sqeezy
-      comment: "Software Repo"
-      pkgdir: /srv/pkgs
+        - dev
+      comment: "Dev Repo"
+      pkgdir: /var/lib/aptly/pkgs
+    stg:
+      components:
+        - main
+      distributions:
+        - stg
+      comment: "Stg Repo"
+      pkgdir: /var/lib/aptly/pkgs
   mirrors:
     google-earth-main:
       url: http://dl.google.com/linux/earth/deb/
