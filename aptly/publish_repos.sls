@@ -1,5 +1,6 @@
 include:
   - aptly.create_repos
+  - aptly.nginx
 
 {% set gpgid = salt['pillar.get']('aptly:gpg_keypair_id', '') %}
 {% set gpgpassphrase = salt['pillar.get']('aptly:gpg_passphrase', '') %}
