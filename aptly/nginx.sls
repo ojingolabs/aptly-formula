@@ -1,6 +1,11 @@
 nginx:
   pkg.installed:
     - name: nginx
+  service.running:
+    - enable: True
+    - restart: True
+    - watch:
+      - file: /etc/nginx/conf.d/aptly.conf
 
 aptly_site:
   file.managed:
